@@ -77,7 +77,8 @@ export const sidebar_data = [
     {
       id: 16,
       heading: 'Fundrises',
-      image: './assets/MenueImages/fundraisers.png'
+      image: './assets/MenueImages/fundraisers.png',
+      link : '/fundraisers'
     },
     {
       id: 17,

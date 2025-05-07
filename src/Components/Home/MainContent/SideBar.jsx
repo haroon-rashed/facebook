@@ -3,6 +3,8 @@ import { FaUser } from "react-icons/fa";
 import { sidebar_data } from "../../../Data/SideBarData";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const containerVariants = {
   initial: {},
@@ -18,10 +20,12 @@ const itemVariants = {
   animate: { opacity: 1, x: 0 },
 };
 
-const SideBar = () => {
+            const SideBar = () => {
   const [showAll, setShowAll] = useState(false);
   const visibleItems = showAll ? sidebar_data : sidebar_data.slice(0, 7);
 
+
+    const {user} = useSelector((state) => state.user);
   const handleToggle = () => {
     setShowAll(!showAll);
   };
@@ -34,7 +38,7 @@ const SideBar = () => {
           <div className="flex items-center justify-center bg-gray-300 rounded-full h-[30px] w-[30px] text-gray-700">
             <FaUser size={20} />
           </div>
-          <p className="text-lg font-medium">Haroon Rasheed</p>
+          <p className="text-lg font-medium">{user?.f_name} {user?.l_name}</p>
         </li>
 
         {/* Sidebar Items with Staggered Animation */}
@@ -45,6 +49,7 @@ const SideBar = () => {
           className="flex flex-col gap-3"
         >
           {visibleItems.map((item, index) => (
+            <Link key={index} to={item.link}>
             <motion.li
               key={index}
               variants={itemVariants}
@@ -57,6 +62,7 @@ const SideBar = () => {
               />
               <p className="text-base">{item.heading}</p>
             </motion.li>
+            </Link>
           ))}
         </motion.div>
 

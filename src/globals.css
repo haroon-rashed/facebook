@@ -23,3 +23,29 @@ body{
 .post-caption{
     resize: none;
 }
+.post-caption {
+    resize: none;
+  }
+  
+  .changed-textarea {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+/* Hide scrollbar but allow scrolling */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;    /* Firefox */
+}

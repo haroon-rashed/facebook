@@ -10,13 +10,13 @@ const Home = () => {
     <div>
     <Navbar/>
     <div className='grid md:grid-cols-12 bg-gray-200'>
-        <div className='md:col-span-3 col-span-12'>
+        <div className='xl:col-span-3  xl:block hidden'>
             <SideBar/>
         </div>
-        <div className='md:col-span-6 col-span-12'>
+        <div className='xl:col-span-6 lg:col-span-8 sm:col-span-12'>
             <HeroSection/>
         </div>
-        <div className='md:col-span-3 col-span-12'>
+        <div className='xl:col-span-3 lg:col-span-4 md:block  hidden '>
             {/* <AddContent/> */}
         </div>
     </div>

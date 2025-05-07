@@ -1,46 +1,50 @@
-import React from 'react'
-import { FaPeopleArrows, FaUser } from 'react-icons/fa'
-import { FaPeopleLine } from 'react-icons/fa6'
-import { account_data } from './AccountData'
+import React from 'react';
+import { FaUser, FaPeopleArrows } from 'react-icons/fa';
+import { account_data } from './AccountData';
 
 const AccountSetting = () => {
   return (
     <>
-    <div className='fixed top-0 left-0 w-screen h-screen bg-transparent '></div>
-     <div onClick={(e)=>e.stopPropagation()} className='absolute top-full rounded-md shadow-2xl w-[400px] p-2 right-0'>
-        <div className='shadow-2xl rounded-md p-3'>
-           <div className='flex gap-3 items-center p-2'>
-            <div className='flex items-center border border-gray-300 text-gray-200 justify-center bg-gray-300  rounded-full h-[50px] w-[50px]'>
-                <FaUser size={30}/>
+      <div className='fixed top-0 left-0 w-screen h-screen bg-transparent'></div>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className='absolute top-full right-0 w-[360px] bg-white rounded-xl shadow-2xl p-4 z-50'
+      >
+        {/* User Info */}
+        <div className='p-2 border-b border-gray-200'>
+          <div className='flex gap-3 items-center'>
+            <div className='h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-white'>
+              <FaUser size={20} />
             </div>
-            <p className='text-1xl text-gray-700 font-semibold capitalize '>UserName</p>
-           </div>
-           <hr className='border-0 bg-gray-300 h-[2px] my-3'/>
-           <div className='bg-gray-300 hover:bg-gray-200 p-3 rounded-md flex gap-3 w-[60%] p-3 mx-auto items-center justify-center'>
-           <FaPeopleArrows size={20} /><p className='text-black '>See All Profiles</p>
-           </div>
+            <p className='text-base text-gray-800 font-semibold capitalize'>Username</p>
+          </div>
         </div>
-        <ul className='unstyled flex flex-col gap-3 p-3'>
+        <div className='my-4'>
+          <div className='bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer p-3 rounded-lg flex gap-3 items-center justify-center text-sm font-medium text-gray-700'>
+            <FaPeopleArrows size={16} />
+            <span>See All Profiles</span>
+          </div>
+        </div>
 
-        {account_data?.map((item,index)=>{
-           return(
-            <div key={index}>
-                <li className='flex justify-between  items-center'>
-                    <div className='flex gap-3 items-center'>
-                        <div className='h-[50px] w-[50px] rounded-full bg-gray-300 flex items-center justify-center'>
-                            {item.icon}
-                        </div>
-                        <p className='text-1xl font-semibold '>{item.title}</p>
-                    </div>
-                    <div>{item.arrow}</div>
-                </li>
-            </div>
-           )
-        })}
+        <ul className='flex flex-col gap-2'>
+          {account_data.map((item, index) => (
+            <li
+              key={index}
+              className='flex justify-between items-center hover:bg-gray-100 transition-colors p-3 rounded-lg cursor-pointer'
+            >
+              <div className='flex items-center gap-3'>
+                <div className='h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600'>
+                  {item.icon}
+                </div>
+                <span className='text-sm font-medium text-gray-800'>{item.title}</span>
+              </div>
+              {item.arrow && <div className='text-gray-400'>{item.arrow}</div>}
+            </li>
+          ))}
         </ul>
-     </div> 
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default AccountSetting
+export default AccountSetting;
