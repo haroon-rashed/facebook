@@ -1,5 +1,5 @@
 export const colorData = [
-  { id: 1, startColor: "white", endColor: "white" },
+  { id: 1, startColor: "#ffffff", endColor: "#ffffff" },
   { id: 2,  startColor: "#2c0e61", endColor: "#49158c" }, 
   { id: 3, startColor: "#d000ff", endColor: "#d000ff" }, // neon purple/magenta
   { id: 4, startColor: "#e50036", endColor: "#e50036" }, // red

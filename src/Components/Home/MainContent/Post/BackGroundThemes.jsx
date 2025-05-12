@@ -5,8 +5,8 @@ import { decorativeData } from './data/Decorative_data'
 const BackGroundThemes = ({setShowBg, showBg, setSelectedColor}) => {
   return (
     <>
-      <div className={`xl:w-full bg-white absolute p-4 lg:w-full md:w-full -translate-y-full ${showBg ? "translate-x-0" : "translate-x-full"}  w-full shadow rounded-md`}>
-  <div className='grid grid-cols-3 mb-2'>
+      <div className={`xl:w-full bg-white absolute p-2 lg:w-full md:w-full -translate-y-full ${showBg ? "translate-x-0" : "translate-x-full"}  w-full shadow rounded-md`}>
+  <div className='grid grid-cols-3 mb-1'>
     <div onClick={()=>setShowBg(false)} className='col-span-1 cursor-pointer h-[40px] w-[40px] rounded-full bg-gray-200 flex justify-center items-center '>
       <IoIosArrowRoundBack size={20}/>
     </div>

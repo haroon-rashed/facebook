@@ -1,33 +1,20 @@
+// PostCard.jsx
 import React from "react";
-import { FaGlobe, FaRegComment, FaUser } from "react-icons/fa";
+import { FaGlobe, FaRegComment, FaThumbsUp, FaUser } from "react-icons/fa";
 import { FiThumbsUp } from "react-icons/fi";
 import { PiShareFat } from "react-icons/pi";
 import moment from "moment";
-import EmojiReactions from "../../Feed/EmojiReactions";
 
-const GetPosts = ({ 
-  background = {
-    startColor: '#ffffff',
-    endColor: '#ffffff',
-    image: ''
-  }, 
-  caption, 
-  _id, 
-  user_id, 
-  createdAt, 
-  uploadImage 
-}) => {
-  const hasUploadImage = Boolean(uploadImage);
-  const hasBackgroundImage = Boolean(background?.image);
-  const isWhiteBackground = 
-    background?.startColor === '#ffffff' && 
-    background?.endColor === '#ffffff' && 
-    !hasBackgroundImage;
-  const hasColorBackground = !isWhiteBackground && !hasBackgroundImage;
+const PostCard = ({ background = {}, caption, _id, user_id, createdAt }) => {
+  const isDefaultBackground =
+    (!background.image && background.startColor === "#ffffff") ||
+    (!background.image && background.startColor === "white");
+
+  const showCaptionOnTop = !background.image && isDefaultBackground;
 
   return (
     <div className="shadow-lg xl:w-[80%] mx-auto lg:w-[80%] md:w-[90%] w-[95%] bg-white rounded-md my-2">
-      {/* User header */}
+      {/* Header */}
       <div className="flex p-3 justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="w-[45px] h-[45px] bg-gray-200 border-gray-300 rounded-full border flex justify-center items-center">
@@ -50,63 +37,46 @@ const GetPosts = ({
         </div>
       </div>
 
-      {/* Post content */}
-      {isWhiteBackground && !hasUploadImage && (
+      {/* Caption */}
+      {showCaptionOnTop && (
         <p className="text-gray-900 p-3 my-2 capitalize">{caption}</p>
       )}
 
-      {hasColorBackground && !hasUploadImage && (
-        <div 
-          className="h-[400px] relative flex items-center justify-center"
-          style={{
-            background: `linear-gradient(to right, ${background.startColor}, ${background.endColor})`
-          }}
-        >
-          <p className="text-white text-4xl capitalize p-4 text-center">
-            {caption}
-          </p>
-        </div>
-      )}
-
-      {hasUploadImage && (
-        <>
-          {caption && (
-            <div className="bg-white p-3">
-              <p className="text-gray-900 capitalize">{caption}</p>
-            </div>
-          )}
-          <div 
-            className="h-[400px] relative bg-gray-100"
-            style={{
-              background: `url(${uploadImage}) center/contain no-repeat`
-            }}
-          />
-        </>
-      )}
-
-      {hasBackgroundImage && !hasUploadImage && (
-        <div 
+      {/* Background Image or Gradient */}
+      {!showCaptionOnTop && (
+        <div
           className="h-[400px] relative"
           style={{
-            background: `url(${background.image}) center/cover no-repeat`
+            background: background.image
+              ? `url(${background.image})`
+              : `linear-gradient(to right, ${background.startColor}, ${background.endColor})`,
+            backgroundSize: background.image ? "cover" : "contain",
+            backgroundPosition: "center center",
           }}
         >
-          <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl capitalize">
+          <p
+            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 capitalize ${
+              background.image || !isDefaultBackground
+                ? "text-white text-4xl"
+                : "text-black text-xl"
+            }`}
+          >
             {caption}
           </p>
         </div>
       )}
 
-      {/* Reactions section */}
+      {/* Likes Info */}
       <div className="flex gap-2 p-3">
         <p className="text-gray-600 m-0">You and 14 others</p>
       </div>
 
       <hr className="bg-gray-300 h-[1px] border-0" />
 
+      {/* Actions */}
       <div className="flex justify-between items-center p-3">
         <div className="flex gap-2 justify-center items-center w-full cursor-pointer hover:bg-gray-100 p-2 rounded-md">
-          <EmojiReactions post_id={_id} />
+          <FiThumbsUp className="text-gray-600" />
           <h6 className="font-semibold text-sm text-gray-600">Like</h6>
         </div>
         <div className="flex gap-2 justify-center items-center w-full cursor-pointer hover:bg-gray-100 p-2 rounded-md">
@@ -116,10 +86,10 @@ const GetPosts = ({
         <div className="flex gap-2 justify-center items-center w-full cursor-pointer hover:bg-gray-100 p-2 rounded-md">
           <PiShareFat className="text-gray-600" />
           <h6 className="font-semibold text-sm text-gray-600">Share</h6>
-        </div> 
+        </div>
       </div>
     </div>
   );
 };
 
-export default GetPosts;
+export default PostCard;

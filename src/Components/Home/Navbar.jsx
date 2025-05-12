@@ -9,15 +9,17 @@ import RightMenu from "./rightMenue/RightMenu";
 import AccountSetting from "./rightMenue/AccountSetting";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import Messenger from "./Messenger";
 
 const Navbar = () => {
   const [focused, setFocused] = useState(false);
+  // const [messenger, setMessenger] = useState(false);
   const [setting, setSetting] = useState(false);
   const [menu, setMenu] = useState(false);
   return (
     <>
       <div className="flex justify-between p-3 sticky top-0 z-100 bg-white">
-        <div className="flex gap-3 items-center w-[280px]"> {/* Added fixed width */}
+        <div className="flex gap-3 items-center w-[280px]">
           {focused ? (
             <IoIosArrowRoundBack
               size={35}
@@ -67,7 +69,8 @@ const Navbar = () => {
             {menu && <RightMenu />}
           </div>
           <div className="h-[40px] w-[40px] rounded-full  cursor-pointer bg-gray-300 hover:bg-gray-200 flex items-center justify-center ">
-            <FaFacebookMessenger size={25} />
+            <FaFacebookMessenger  size={25} />
+            {/* { messenger && <Messenger/>} */}
           </div>
           <div className="h-[40px] w-[40px] rounded-full  cursor-pointer bg-gray-300 hover:bg-gray-200 flex items-center justify-center ">
             <HiMiniBell size={25} />
