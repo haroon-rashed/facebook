@@ -90,6 +90,7 @@ const OTPVerification = () => {
       otp: enteredOtp,
       id: user?._id,
     };
+    console.log(user)
 
     await dispatch(verifyUserAsync(otpData));
 

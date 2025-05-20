@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { addPost, getAllPosts, makeReaction } from './postService';
+import { addComment, addPost, getAllPosts, makeReaction } from './postService';
 
 const initialState = {
   posts: [],
@@ -10,6 +10,9 @@ const initialState = {
   reactionLoading: false,
   reactionError: false,
   reactionSuccess: false,
+  commentLoading: false,
+  commentError: false,
+  commentSuccess: false,
 };
 
 export const addPostData = createAsyncThunk(
@@ -51,6 +54,17 @@ export const addReactionData = createAsyncThunk(
   }
 );
 
+
+
+export const addCommentData = createAsyncThunk('add-comment',  async(commentData, thunkAPI)=>{
+  try {
+    const token = thunkAPI.getState().user.user.token
+    console.log(token)
+    return await addComment(commentData, token)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data.error)
+  }
+})
 export const postSlice = createSlice({
   name: 'posts',
   initialState,
@@ -60,6 +74,12 @@ export const postSlice = createSlice({
       state.postError = null;
       state.postMessage = '';
       state.postSuccess = false;
+      state.reactionError = false;
+      state.reactionLoading = false;
+      state.reactionSuccess = false;
+      state.commentError = false;
+      state.commentLoading = false;
+      state.commentSuccess = false;
     }
   },
   extraReducers: (builder) => {
@@ -107,7 +127,33 @@ export const postSlice = createSlice({
         if (postIndex !== -1) {
           state.posts[postIndex].reactions = reaction;
         }
-      });
+      })
+      .addCase(addCommentData.pending, (state) => {
+        state.commentLoading = true;
+        state.commentError = false;
+      })
+      .addCase(addCommentData.rejected, (state, action) => {
+        state.commentError = true;
+        state.commentLoading = false;
+      })
+        .addCase(addCommentData.fulfilled, (state, action) => {
+          state.commentLoading = false;
+          state.commentSuccess = true;
+        
+          const comments = action.payload.comments;
+          const postId = comments[0].post_id; // Get post_id from the first comment
+        
+          state.posts = state.posts.map(post => {
+            if (post._id === postId) {
+              return {
+                ...post,
+                comments: comments
+              };
+            }
+            return post;
+          });
+        });
+        
   }
 });
 

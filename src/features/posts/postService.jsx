@@ -35,3 +35,18 @@ export const makeReaction = async (reactionData) =>{
      throw new Error(error.response?.data.message  || 'Failed to create reactions')
   }
 }
+
+
+
+export const addComment = async(commentData, token) =>{
+  const config = {
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const response = await axios.post(`${API_URL}add-comment/${commentData?.post_id}`, commentData, config)
+
+
+  return response.data
+}

@@ -49,3 +49,16 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none;    /* Firefox */
 }
+.reaction-container {
+  display: flex;
+  align-items: center;
+}
+
+.reaction-emoji {
+  display: inline-block;
+  position: relative;
+}
+
+.reaction-emoji:not(:first-child) {
+  margin-left: -10px;
+}

@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import SideBar from './MainContent/SideBar'
 import HeroSection from './MainContent/HeroSection'
 import AddContent from "./MainContent/Post/AddPost.jsx";
+import AdsSection from './MainContent/AdsSection.jsx';
 
 
 const Home = () => {
@@ -16,8 +17,8 @@ const Home = () => {
         <div className='xl:col-span-6 lg:col-span-8 sm:col-span-12'>
             <HeroSection/>
         </div>
-        <div className='xl:col-span-3 lg:col-span-4 md:block  hidden '>
-            {/* <AddContent/> */}
+        <div className='xl:col-span-3 lg:col-span-4 xl:block  hidden '>
+           <AdsSection/>
         </div>
     </div>
     </div>

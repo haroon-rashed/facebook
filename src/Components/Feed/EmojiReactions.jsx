@@ -4,18 +4,18 @@ import { FiThumbsUp } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReactionData } from '../../features/posts/postSlice';
 
-const EmojiReactions = ({ post_id }) => {
+const EmojiReactions = ({ post_id, likes }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [selectedReaction, setSelectedReaction] = useState(null);
   const [hoveredReaction, setHoveredReaction] = useState(null);
 
   const reactions = [
-    { id: 'like', emoji: '👍', label: 'Like', color: '#1877f2' },
-    { id: 'love', emoji: '❤️', label: 'Love', color: '#f33e58' },
-    { id: 'haha', emoji: '😂', label: 'Haha', color: '#f7b125' },
-    { id: 'wow', emoji: '😮', label: 'Wow', color: '#f7b125' },
-    { id: 'sad', emoji: '😢', label: 'Sad', color: '#f7b125' },
-    { id: 'angry', emoji: '😡', label: 'Angry', color: '#e9710f' }
+    { id: 'like', emoji: '👍', label: 'like', color: '#1877f2' },
+    { id: 'love', emoji: '❤️', label: 'love', color: '#f33e58' },
+    { id: 'haha', emoji: '😂', label: 'haha', color: '#f7b125' },
+    { id: 'wow', emoji: '😮', label: 'wow', color: '#f7b125' },
+    { id: 'sad', emoji: '😢', label: 'sad', color: '#f7b125' },
+    { id: 'angry', emoji: '😡', label: 'angry', color: '#e9710f' }
   ];
 
   const { user } = useSelector((state) => state.user);
@@ -28,17 +28,60 @@ const EmojiReactions = ({ post_id }) => {
     const reactionData = {
       post_id,
       user_id: user._id,
-      type: reaction.id // Send the reaction ID ("like", "love", etc.)
+      type: reaction.id 
     };
     
     console.log("Dispatching reaction:", reactionData);
     dispatch(addReactionData(reactionData));
   };
 
+  const isPresent = likes.find((item) => item.id == user?._id);
+  const userReaction = reactions.find(r => r.id === isPresent?.type);
+
   const handleMouseLeave = () => {
     if (!selectedReaction) {
       setShowPicker(false);
     }
+  };
+
+  // Emoji images mapping
+  const emojiImages = {
+    wow: (
+      <picture>
+        <source srcSet="https://fonts.gstatic.com/s/e/notoemoji/latest/1f62f/512.webp" type="image/webp"/>
+        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f62f/512.gif" alt="😯" width="24" height="24"/>
+      </picture>
+    ),
+    like: (
+      <picture>
+        <source srcSet="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d/512.webp" type="image/webp"/>
+        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d/512.gif" alt="👍" width="24" height="24"/>
+      </picture>
+    ),
+    love: (
+      <picture>
+        <source srcSet="https://fonts.gstatic.com/s/e/notoemoji/latest/2764_fe0f/512.webp" type="image/webp"/>
+        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2764_fe0f/512.gif" alt="❤" width="24" height="24"/>
+      </picture>
+    ),
+    haha: (
+      <picture>
+        <source srcSet="https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/512.webp" type="image/webp"/>
+        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f606/512.gif" alt="😆" width="24" height="24"/>
+      </picture>
+    ),
+    angry: (
+      <picture>
+        <source srcSet="https://fonts.gstatic.com/s/e/notoemoji/latest/1f621/512.webp" type="image/webp"/>
+        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f621/512.gif" alt="😡" width="24" height="24"/>
+      </picture>
+    ),
+    sad: (
+      <picture>
+        <source srcSet="https://fonts.gstatic.com/s/e/notoemoji/latest/1f61f/512.webp" type="image/webp"/>
+        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f61f/512.gif" alt="😟" width="24" height="24"/>
+      </picture>
+    )
   };
 
   return (
@@ -56,13 +99,30 @@ const EmojiReactions = ({ post_id }) => {
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="text-2xl"
+              className="flex items-center gap-1"
               style={{ color: selectedReaction.color }}
             >
-              {selectedReaction.emoji}
+              <span className="text-2xl">{selectedReaction.emoji}</span>
+              <span className="font-semibold text-sm capitalize text-gray-600">{selectedReaction.label}</span>
+            </motion.div>
+          ) : isPresent ? (
+            <motion.div
+              className="flex items-center gap-1"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+            >
+              <span className="w-6 h-6 flex items-center justify-center">
+                {emojiImages[isPresent.type]}
+              </span>
+              <span className="font-semibold text-sm capitalize text-gray-600">
+                {userReaction?.label}
+              </span>
             </motion.div>
           ) : (
-            <FiThumbsUp className="text-gray-600 cursor-pointer" />
+            <div className="flex items-center gap-1">
+              <FiThumbsUp className="text-gray-600 cursor-pointer" />
+              <span className="font-semibold text-sm text-gray-600">Like</span>
+            </div>
           )}
         </button>
 
